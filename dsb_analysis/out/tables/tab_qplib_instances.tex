@@ -1,0 +1,23 @@
+% auto-generated: QPLIB, K=3200, fastest dsb-gpu path (integration time) vs matched SB 2.0.0
+\begin{tabular}{lrrrlrrrrrr}\toprule
+Instance & $n$ & $B$ & $\Delta t$ & Fastest path & \textmu s/step & SB \textmu s/step & Speedup & Gap (\%) & SB gap (\%) & $u$ dsb/SB\\\midrule
+QPLIB\_5875 & 200 & 1024 & 0.53 & \texttt{gemm} FP16 & 8.7 & 177.6 & 20.3 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_3852 & 231 & 2048 & 1.15 & \texttt{csr-block} & 3.7 & 173.3 & 46.4 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_3565 & 276 & 2048 & 1.17 & \texttt{csr-block} & 4.3 & 171.5 & 39.6 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_5721 & 300 & 512 & 1.03 & \texttt{gemm} FP16 & 10.0 & 174.9 & 17.6 & 0.786 & 0.821 & 0/0 \\
+QPLIB\_3745 & 325 & 2048 & 1.17 & \texttt{csr-block} & 5.1 & 163.6 & 32.3 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_5725 & 343 & 1024 & 1.07 & \texttt{csr-block} & 2.3 & 174.0 & 74.7 & 0.099 & 0.000 & 3/0 \\
+QPLIB\_3705 & 378 & 1024 & 1.15 & \texttt{csr-block} & 2.9 & 172.9 & 60.1 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_5755 & 400 & 1024 & 1.05 & \texttt{csr-block} & 2.9 & 175.0 & 60.6 & 0.425 & 0.661 & 2/0 \\
+QPLIB\_3738 & 435 & 1024 & 1.16 & \texttt{csr-block} & 3.4 & 174.2 & 51.6 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_3506 & 496 & 1024 & 1.16 & \texttt{csr-block} & 4.0 & 181.7 & 44.9 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_3832 & 561 & 512 & 1.16 & \texttt{csr-block} & 2.4 & 172.8 & 73.0 & 0.000 & 0.000 & 50/48 \\
+QPLIB\_3877 & 630 & 512 & 1.15 & \texttt{csr-block} & 2.6 & 175.9 & 66.6 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_3706 & 703 & 512 & 1.16 & \texttt{csr-block} & 3.0 & 172.7 & 58.4 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_3838 & 780 & 512 & 1.17 & \texttt{csr-block} & 3.2 & 171.8 & 52.9 & 0.000 & 0.268 & 48/17 \\
+QPLIB\_3822 & 861 & 512 & 1.15 & \texttt{csr-block} & 3.7 & 162.1 & 44.3 & 0.000 & 0.000 & 50/50 \\
+QPLIB\_3650 & 946 & 256 & 1.16 & \texttt{csr-block} & 2.0 & 174.3 & 85.6 & 0.108 & 0.000 & 25/26 \\
+QPLIB\_3642 & 1035 & 256 & 1.16 & \texttt{csr-block} & 2.3 & 164.0 & 69.8 & 0.000 & 0.000 & 50/40 \\
+QPLIB\_3693 & 1128 & 256 & 1.15 & \texttt{csr-block} & 2.5 & 164.3 & 64.6 & 0.173 & 0.173 & 5/0 \\
+QPLIB\_3850 & 1225 & 256 & 1.16 & \texttt{csr-block} & 2.7 & 168.2 & 62.9 & 0.000 & 0.167 & 43/22 \\
+\bottomrule\end{tabular}

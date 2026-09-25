@@ -1,0 +1,11 @@
+% auto-generated: bit_dense_multi, 2 GH200s, K=50, B=1; random +-1 J: median of 3 repetitions; Mattis: one run per seed, found = energy equals -n(n-1)/2
+\begin{tabular}{rrlrrrrrr}\toprule
+ & & & \multicolumn{2}{c}{Split (GB)} & \multicolumn{2}{c}{Random $\pm1$ $J$} & \multicolumn{2}{c}{Mattis} \\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+$n$ & Matrix (GB) & Placement & HBM & Grace & $T_{\mathrm{step}}$ (s) & GB/s & Found & $T_{\mathrm{step}}$ (s)\\\midrule
+500{,}000 & 31 & HBM & 31 & 0 & 0.0035 & 8952 & 3/3 & 0.0035 \\
+1{,}000{,}000 & 125 & HBM & 125 & 0 & 0.0139 & 8991 & 3/3 & 0.0139 \\
+2{,}000{,}000 & 500 & HBM + Grace & 254 & 246 & 0.4069 & 1229 & 3/3 & 0.4073 \\
+2{,}500{,}000 & 781 & HBM + Grace & 254 & 527 & 0.8436 & 926 & 3/3 & 0.8455 \\
+3{,}000{,}000 & 1125 & HBM + Grace & 254 & 871 & 1.4015 & 803 & 3/3 & 1.4009 \\
+\bottomrule\end{tabular}

@@ -1,0 +1,12 @@
+% auto-generated: K2000, B=512, K=1600, target 33337, matched SB 2.0.0 baseline
+\begin{tabular}{lrrrrrr}\toprule
+Path & \textmu s/step & Solve (ms) & Best & Median & $u/M$ & TTS$_{99}$ (s)\\\midrule
+SB 2.0.0 (matched) & 168.7 & 269.9 & 33337 & 33278.5 & 1/50 & 61.5 \\
+\texttt{csr-row} & 1299.5 & 2079.2 & 33337 & 33309.5 & 10/50 & 43.7 \\
+\texttt{block} & 771.3 & 1234.1 & 33337 & 33311.0 & 11/50 & 23.4 \\
+\texttt{gemm} FP32 (no TF32) & 110.8 & 177.2 & 33337 & 33311.0 & 11/50 & 3.37 \\
+\texttt{gemm} TF32 & 27.3 & 43.7 & 33337 & 33311.0 & 11/50 & 0.831 \\
+\texttt{gemm} INT8 & 16.0 & 25.6 & 33337 & 33311.0 & 11/50 & 0.485 \\
+\texttt{bit} & 30.1 & 48.2 & 33337 & 33311.0 & 11/50 & 0.915 \\
+\texttt{gemm} FP16 & 12.5 & 20.0 & 33337 & 33309.5 & 7/50 & 0.62 \\
+\bottomrule\end{tabular}

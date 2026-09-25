@@ -1,0 +1,12 @@
+% auto-generated: dsb-gpu gemm beyond the HBM limit, K=50, median of 3 repetitions; GB/s = bn^2/T_step at B=1
+\begin{tabular}{lrrrrrrrrrr}\toprule
+ & & & \multicolumn{3}{c}{Grace only} & \multicolumn{4}{c}{Hybrid HBM+Grace} & \\
+\cmidrule(lr){4-6}\cmidrule(lr){7-10}
+Operands & $n$ & Matrix (GB) & $B=1$ (s) & $B=64$ (s) & GB/s & In Grace (GB) & $B=1$ (s) & $B=64$ (s) & GB/s & Speedup\\\midrule
+FP32 & 200{,}000 & 160 & 0.430 & 0.437 & 372 & 33 & 0.118 & 0.124 & 1359 & 3.65 \\
+FP32 & 240{,}000 & 230 & 0.620 & 0.632 & 371 & 103 & 0.308 & 0.317 & 749 & 2.02 \\
+FP32 & 300{,}000 & 360 & 0.971 & 0.990 & 371 & 233 & 0.658 & 0.673 & 547 & 1.48 \\
+FP16 & 300{,}000 & 180 & 0.485 & 0.494 & 371 & 53 & 0.178 & 0.181 & 1009 & 2.72 \\
+FP16 & 400{,}000 & 320 & 0.863 & 0.877 & 371 & 193 & 0.555 & 0.558 & 577 & 1.55 \\
+FP16 & 450{,}000 & 405 & 1.090 & 1.107 & 371 & 278 & 0.783 & 0.791 & 517 & 1.39 \\
+\bottomrule\end{tabular}

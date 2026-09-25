@@ -1,0 +1,9 @@
+% auto-generated: analytic n_max = sqrt(M/b); measured = largest n that ran (dsb-gpu gemm, K=50; dagger = bit_dense_multi on two GH200s, K=50, B=1)
+\begin{tabular}{lcccccc}\toprule
+Format & Bytes/coupling & $n_{\max}$, 121\,GB & $n_{\max}$, 601\,GB & HBM, ran & HBM+Grace, ran & PyTorch, ran\\\midrule
+FP32 / TF32 & 4 & 174{,}000 & 388{,}000 & 160{,}000 & 300{,}000 (360\,GB) & 160{,}000 \\
+FP16 & 2 & 246{,}000 & 548{,}000 & 240{,}000 & 450{,}000 (405\,GB) & 240{,}000 \\
+INT8 & 1 & 348{,}000 & 775{,}000 & \blank & \blank & \blank \\
+bit, ternary & $1/4$ & 696{,}000 & 1{,}551{,}000 & \blank & \blank & \blank \\
+bit, dense $\pm1$ & $1/8$ & 984{,}000 & 2{,}193{,}000 & 1{,}000{,}000$^\dagger$ & 3{,}000{,}000 (1125\,GB)$^\dagger$ & \blank \\
+\bottomrule\end{tabular}
