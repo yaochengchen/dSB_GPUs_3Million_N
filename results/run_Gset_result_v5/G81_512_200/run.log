@@ -1,0 +1,16 @@
+DT=auto -> dt=1.15 for G81
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu auto reduction=0 in 3.520s (50 rows)
+warning: dsb-gpu bit reduction=0 -> does-not-fit after 1.160s (exit 1, 0/50 rows kept): error: Solver: bit variant does not fit: N=20000 batch=512 needs 1578112 B shared memory per block and 625 co-resident blocks
+ok: dsb-gpu csr-row reduction=0 in 3.535s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 2.988s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 177.572s (50 rows)
+ok: dsb-gpu gemm:fp32:notf32 reduction=0 in 258.376s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 352.913s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 191.605s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 2.756s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 106.660s (50 rows)
+results: run_Gset_result_v5/G81_512_200
+summary: run_Gset_result_v5/G81_512_200/summary.csv
+status:  run_Gset_result_v5/G81_512_200/run_status.csv

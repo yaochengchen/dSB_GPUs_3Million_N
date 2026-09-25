@@ -1,0 +1,16 @@
+DT=auto -> dt=1.15 for G77
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu auto reduction=0 in 3.872s (50 rows)
+warning: dsb-gpu bit reduction=0 -> does-not-fit after 0.906s (exit 1, 0/50 rows kept): error: Solver: bit variant does not fit: N=14000 batch=512 needs 1154176 B shared memory per block and 438 co-resident blocks
+ok: dsb-gpu csr-row reduction=0 in 5.324s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 3.840s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 102.004s (50 rows)
+ok: dsb-gpu gemm:fp32:notf32 reduction=0 in 246.382s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 170.332s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 98.771s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 2.728s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 186.494s (50 rows)
+results: run_Gset_result_v5_supp/G77_512_800
+summary: run_Gset_result_v5_supp/G77_512_800/summary.csv
+status:  run_Gset_result_v5_supp/G77_512_800/run_status.csv

@@ -1,0 +1,16 @@
+DT=auto -> dt=0.71 for G43
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu auto reduction=0 in 2.718s (50 rows)
+ok: dsb-gpu bit reduction=0 in 5.273s (50 rows)
+ok: dsb-gpu csr-row reduction=0 in 2.713s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 3.968s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 5.181s (50 rows)
+ok: dsb-gpu gemm:fp32:notf32 reduction=0 in 8.068s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 5.602s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 4.036s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 2.047s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 30.186s (50 rows)
+results: run_Gset_result_v5/G43_512_3200
+summary: run_Gset_result_v5/G43_512_3200/summary.csv
+status:  run_Gset_result_v5/G43_512_3200/run_status.csv

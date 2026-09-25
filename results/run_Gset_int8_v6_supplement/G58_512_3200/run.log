@@ -1,0 +1,8 @@
+DT=auto -> dt=0.51 for G58
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu gemm:int8 reduction=0 in 25.165s (50 rows)
+ok: public-dsb public:fp32:matched reduction=0 in 111.672s (50 rows)
+results: run_Gset_int8_v6_supplement/G58_512_3200
+summary: run_Gset_int8_v6_supplement/G58_512_3200/summary.csv
+status:  run_Gset_int8_v6_supplement/G58_512_3200/run_status.csv

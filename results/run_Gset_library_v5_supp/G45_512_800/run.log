@@ -1,0 +1,8 @@
+DT=auto -> dt=0.72 for G45
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu csr-row reduction=0 in 0.946s (50 rows)
+ok: public-dsb public:fp32:library reduction=0 in 10.585s (50 rows)
+results: run_Gset_library_v5_supp/G45_512_800
+summary: run_Gset_library_v5_supp/G45_512_800/summary.csv
+status:  run_Gset_library_v5_supp/G45_512_800/run_status.csv

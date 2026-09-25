@@ -1,0 +1,45 @@
+# ---- build products ----------------------------------------------------
+*.o
+*.a
+*.so
+*.cubin
+*.ptx
+*.fatbin
+solve_qplib
+solve_gset
+export_fasthare
+dense_scaling
+selftest
+bench
+gpu_probe
+c2c_probe
+bit_dense_multi
+
+# ---- Python / editors ----------------------------------------------------
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# ---- profiler output and console logs ------------------------------------
+*.nsys-rep
+*.sqlite
+*.ncu-rep
+/*.log
+
+# ---- data: downloaded / generated instances, not part of the repository ---
+data/qplib/data/*
+data/Gset/data/*
+data/scaling/*
+!data/qplib/data/.gitkeep
+!data/Gset/data/.gitkeep
+!data/scaling/.gitkeep
+
+# ---- results: raw measurements are archived with the paper, not versioned -
+# (delete the next two lines to commit results/ as well)
+# results/*
+# !results/README.md

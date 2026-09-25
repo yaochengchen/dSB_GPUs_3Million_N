@@ -1,0 +1,1 @@
+public_sb_schedules=none dt=1.15 batch=8192 steps=800 repeats=50 warmup=1

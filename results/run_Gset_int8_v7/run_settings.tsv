@@ -1,0 +1,15 @@
+gset	best_known	batch	steps	status	output_dir
+G66	6364	512	200	started	run_Gset_int8_v7/G66_512_200
+G66	6364	512	200	completed	run_Gset_int8_v7/G66_512_200
+G66	6364	512	400	started	run_Gset_int8_v7/G66_512_400
+G66	6364	512	400	completed	run_Gset_int8_v7/G66_512_400
+G66	6364	512	800	started	run_Gset_int8_v7/G66_512_800
+G66	6364	512	800	completed	run_Gset_int8_v7/G66_512_800
+G66	6364	512	1600	started	run_Gset_int8_v7/G66_512_1600
+G66	6364	512	1600	completed	run_Gset_int8_v7/G66_512_1600
+G66	6364	512	3200	started	run_Gset_int8_v7/G66_512_3200
+G66	6364	512	1600	started	run_Gset_int8_v7/G66_512_1600
+G66	6364	512	1600	started	run_Gset_int8_v7/G66_512_1600
+G66	6364	512	1600	completed	run_Gset_int8_v7/G66_512_1600
+G66	6364	512	3200	started	run_Gset_int8_v7/G66_512_3200
+G66	6364	512	3200	completed	run_Gset_int8_v7/G66_512_3200

@@ -1,0 +1,4 @@
+implementation,n,repeat,seed,batch,steps,precision,requested_variant,selected_variant,requested_memory,selected_memory,cluster,matrix_bytes,hbm_bytes,grace_bytes,hbm_free_before,hbm_total,generation_s,gpu_s,time_per_step_s,dense_interactions_per_s,effective_matrix_GB_s,status,error
+dsb-gpu-dense,300000,0,42,1,50,fp32,gemm,gemm,auto,grace,1,360000000000,2400200,360000000000,152421990400,153008209920,70.690556,48.1914141,0.963828281,9.33773181e+10,373.510517,completed,
+dsb-gpu-dense,300000,1,42,1,50,fp32,gemm,gemm,auto,grace,1,360000000000,2400200,360000000000,152421990400,153008209920,70.690556,48.2008438,0.964016875,9.33590504e+10,373.437446,completed,
+dsb-gpu-dense,300000,2,42,1,50,fp32,gemm,gemm,auto,grace,1,360000000000,2400200,360000000000,152421990400,153008209920,70.690556,48.2063516,0.964127031,9.33483836e+10,373.394779,completed,

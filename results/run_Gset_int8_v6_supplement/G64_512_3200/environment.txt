@@ -1,0 +1,18 @@
+Wed Sep 23 07:51:58 PM UTC 2026
+Linux gh200 7.0.0-1019-nvidia-64k #19~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Sun Sep  6 20:24:04 UTC 2 aarch64 aarch64 aarch64 GNU/Linux
+physical GPU_ID=0; visible CUDA device=cuda:0
+batch=512 steps=3200 repeats=50 warmup=1
+precision=fp32 FastHare_alpha=0.2
+reduction_modes=0 variants=gemm:int8
+variant_timeout_s=1800
+public_sb_schedules=matched dt=0.58
+name, uuid, driver_version, memory.total [MiB]
+NVIDIA GH200 144G HBM3e, GPU-737a524c-df06-3ef5-a47b-db63d5998c83, 595.45.04, 146831 MiB
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2026 NVIDIA Corporation
+Built on Mon_Mar_02_09:52:54_PM_PST_2026
+Cuda compilation tools, release 13.2, V13.2.51
+Build cuda_13.2.r13.2/compiler.37434383_0
+Python 3.11.16
+torch 2.14.0+cu130 cuda 13.0
+simulated-bifurcation 2.0.0

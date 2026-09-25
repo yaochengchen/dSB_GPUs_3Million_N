@@ -1,0 +1,11 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+QPLIB_3705,1024,800,dsb-gpu,auto,auto,fp32,0,ok,0,1.554,50,50,1800,"note: QPLIB_3705 has an identically zero external field; FastHare will see a field-free instance and reduce little"
+QPLIB_3705,1024,800,dsb-gpu,bit,bit,fp32,0,error,1,0.025,0,50,1800,"error: unknown variant: bit"
+QPLIB_3705,1024,800,dsb-gpu,csr-row,csr-row,fp32,0,ok,0,0.748,50,50,1800,"note: QPLIB_3705 has an identically zero external field; FastHare will see a field-free instance and reduce little"
+QPLIB_3705,1024,800,dsb-gpu,csr-block,csr-block,fp32,0,ok,0,0.627,50,50,1800,"note: QPLIB_3705 has an identically zero external field; FastHare will see a field-free instance and reduce little"
+QPLIB_3705,1024,800,dsb-gpu,block,block,fp32,0,ok,0,3.574,50,50,1800,"note: QPLIB_3705 has an identically zero external field; FastHare will see a field-free instance and reduce little"
+QPLIB_3705,1024,800,dsb-gpu,gemm,gemm,fp32,0,ok,0,1.788,50,50,1800,"note: QPLIB_3705 has an identically zero external field; FastHare will see a field-free instance and reduce little"
+QPLIB_3705,1024,800,dsb-gpu,gemm:fp32:notf32,gemm-notf32,fp32,0,error,1,0.024,0,50,1800,"error: unknown option: --no-tf32"
+QPLIB_3705,1024,800,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,1.459,50,50,1800,"note: QPLIB_3705 has an identically zero external field; FastHare will see a field-free instance and reduce little"
+QPLIB_3705,1024,800,dsb-gpu,gemm:fp16,gemm,fp16,0,ok,0,2.086,50,50,1800,"note: QPLIB_3705 has an identically zero external field; FastHare will see a field-free instance and reduce little"
+QPLIB_3705,1024,800,public-dsb,public:float32:matched,public,float32,0,ok,0,9.167,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.15; 'pressure_slope': 0.0010883169178864886; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"

@@ -1,0 +1,1 @@
+implementation,instance,repeat,seed,n_original,n_before_reduction,n_reduced,edges,agents,steps,precision,variant,storage,reduction,early_stopping,objective,target,success,preprocess_s,setup_s,solver_s,reconstruction_s,evaluation_s,total_s,wall_s,reduction_ratio,time_per_step_s,edge_updates_per_s,nnz_solver,coupling_bytes,gpu_memory_bytes

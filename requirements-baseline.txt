@@ -1,0 +1,3 @@
+# Install a CUDA-enabled PyTorch build appropriate for the GH200 first.
+simulated-bifurcation==2.0.0
+scipy

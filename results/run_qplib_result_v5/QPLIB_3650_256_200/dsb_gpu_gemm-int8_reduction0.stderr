@@ -1,0 +1,1 @@
+note: QPLIB_3650 has an identically zero external field; FastHare will see a field-free instance and reduce little

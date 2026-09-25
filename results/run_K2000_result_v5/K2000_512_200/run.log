@@ -1,0 +1,23 @@
+DT=auto -> dt=1.10 for WK2000_1.rud
+make: Nothing to be done for 'all'.
+nvcc -O3 -std=c++17 --use_fast_math --expt-relaxed-constexpr -arch=sm_90 -Iinclude -Ithird_party/fasthare -I/usr/include/eigen3 -I/usr/local/cuda-13.2/include tools/gpu_probe.cu -o gpu_probe
+ok: dsb-gpu auto reduction=0 in 3.953s (50 rows)
+ok: dsb-gpu bit reduction=0 in 3.810s (50 rows)
+ok: dsb-gpu csr-row reduction=0 in 15.313s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 132.163s (50 rows)
+ok: dsb-gpu csr-cluster reduction=0 in 101.772s (50 rows)
+ok: dsb-gpu block reduction=0 in 10.593s (50 rows)
+ok: dsb-gpu cluster reduction=0 in 24.015s (50 rows)
+ok: dsb-gpu global-sync reduction=0 in 95.915s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 3.482s (50 rows)
+ok: dsb-gpu gemm:fp32:notf32 reduction=0 in 4.326s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 5.200s (50 rows)
+ok: dsb-gpu block:fp16 reduction=0 in 10.056s (50 rows)
+ok: dsb-gpu cluster:fp16 reduction=0 in 37.892s (50 rows)
+ok: dsb-gpu global-sync:fp16 reduction=0 in 98.833s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 4.033s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 4.980s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 8.134s (50 rows)
+results: run_K2000_result_v5/K2000_512_200
+summary: run_K2000_result_v5/K2000_512_200/summary.csv
+status:  run_K2000_result_v5/K2000_512_200/run_status.csv

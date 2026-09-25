@@ -1,0 +1,11 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+G32,512,1600,dsb-gpu,auto,auto,fp32,0,ok,0,1.504,50,50,1800,""
+G32,512,1600,dsb-gpu,bit,bit,fp32,0,ok,0,5.617,50,50,1800,""
+G32,512,1600,dsb-gpu,csr-row,csr-row,fp32,0,ok,0,1.506,50,50,1800,""
+G32,512,1600,dsb-gpu,csr-block,csr-block,fp32,0,ok,0,1.099,50,50,1800,""
+G32,512,1600,dsb-gpu,gemm,gemm,fp32,0,ok,0,5.041,50,50,1800,""
+G32,512,1600,dsb-gpu,gemm:fp32:notf32,gemm-notf32,fp32,0,ok,0,11.866,50,50,1800,""
+G32,512,1600,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,4.885,50,50,1800,""
+G32,512,1600,dsb-gpu,gemm:fp16,gemm,fp16,0,ok,0,4.374,50,50,1800,""
+G32,512,1600,public-dsb,public:fp16:matched,public,fp16,0,error,1,1.943,0,50,1800,"ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype."
+G32,512,1600,public-dsb,public:fp32:matched,public,fp32,0,ok,0,15.936,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.17; 'pressure_slope': 0.0005345221105071011; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"

@@ -1,0 +1,13 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+G66,512,200,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,86.143,50,50,1800,""
+G66,512,200,public-dsb,public:fp32:matched,public,fp32,0,ok,0,26.011,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.16; 'pressure_slope': 0.004332004851845435; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"
+G66,512,400,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,64.356,50,50,1800,""
+G66,512,400,public-dsb,public:fp32:matched,public,fp32,0,ok,0,44.386,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.16; 'pressure_slope': 0.002160573848414139; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"
+G66,512,800,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,68.710,50,50,1800,""
+G66,512,800,public-dsb,public:fp32:matched,public,fp32,0,ok,0,81.360,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.16; 'pressure_slope': 0.0010789348754909154; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"
+G66,512,1600,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,72.233,50,50,1800,""
+G66,512,1600,public-dsb,public:fp32:matched,public,fp32,0,ok,0,157.252,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.16; 'pressure_slope': 0.0005391300597356106; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"
+G66,512,1600,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,70.111,50,50,1800,""
+G66,512,1600,public-dsb,public:fp32:matched,public,fp32,0,ok,0,153.433,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.16; 'pressure_slope': 0.0005391300597356106; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"
+G66,512,3200,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,77.893,50,50,1800,""
+G66,512,3200,public-dsb,public:fp32:matched,public,fp32,0,ok,0,300.764,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.16; 'pressure_slope': 0.00026948076446303265; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"

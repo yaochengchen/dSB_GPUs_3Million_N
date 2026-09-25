@@ -1,0 +1,11 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+G48,512,200,dsb-gpu,auto,auto,fp32,0,ok,0,0.810,50,50,1800,""
+G48,512,200,dsb-gpu,bit,bit,fp32,0,does-not-fit,1,0.136,0,50,1800,"error: Solver: bit variant does not fit: N=3000 batch=512 needs 361600 B shared memory per block and 94 co-resident blocks"
+G48,512,200,dsb-gpu,csr-row,csr-row,fp32,0,ok,0,0.819,50,50,1800,""
+G48,512,200,dsb-gpu,csr-block,csr-block,fp32,0,ok,0,0.726,50,50,1800,""
+G48,512,200,dsb-gpu,gemm,gemm,fp32,0,ok,0,4.274,50,50,1800,""
+G48,512,200,dsb-gpu,gemm:fp32:notf32,gemm-notf32,fp32,0,ok,0,5.906,50,50,1800,""
+G48,512,200,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,5.910,50,50,1800,""
+G48,512,200,dsb-gpu,gemm:fp16,gemm,fp16,0,ok,0,4.803,50,50,1800,""
+G48,512,200,public-dsb,public:fp16:matched,public,fp16,0,error,1,2.025,0,50,1800,"ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype."
+G48,512,200,public-dsb,public:fp32:matched,public,fp32,0,ok,0,5.323,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.1; 'pressure_slope': 0.0045682960255824575; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"

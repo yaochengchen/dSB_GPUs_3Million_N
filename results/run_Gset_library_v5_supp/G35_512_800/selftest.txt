@@ -1,0 +1,68 @@
+selftest  n=512  batch=4  steps=50
+shared memory budget : 232448 B/block   (max N single block 25827)
+
+fp32 block kernel vs CPU reference
+  max |x_gpu - x_cpu|               2.862e-06   tol 1.000e-04   PASS
+  max rel energy diff               5.920e-09   tol 1.000e-06   PASS
+
+fp16 block kernel vs CPU reference (energy only)
+  max rel energy diff               3.098e-02   tol 5.000e-02   PASS
+
+global-sync baseline vs plain block kernel
+  max |x_other - x_block|           2.474e-06   tol 1.000e-03   PASS
+  max rel energy diff               0.000e+00   tol 1.000e-06   PASS
+
+gemm baseline vs plain block kernel
+  max |x_other - x_block|           7.331e-06   tol 1.000e-03   PASS
+  max rel energy diff               0.000e+00   tol 1.000e-06   PASS
+  second graph launch                 PASS
+
+gemm (TF32) vs plain block kernel (energy only)
+  max rel energy diff               3.097e-02   tol 5.000e-02   PASS
+
+bit (dense +-1, XOR form) vs fp32 block kernel
+  plan: rows/block=16 blocks=32 smem=2176 B dense_pm1=1
+  max |x_bit - x_block|  (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  max rel energy diff    (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  max |x_bit - x_cpu|               1.317e-07   tol 1.000e-04   PASS
+  energy vs CPU reference           0.000e+00   tol 1.000e-09   PASS
+  second run |x - x_block|          0.000e+00   tol 0.000e+00   PASS
+
+gemm int8 (IMMA) vs fp32 block kernel, dense +-1
+  max |x_int8 - x_block| (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  max rel energy diff    (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  second run |x - x_block|          0.000e+00   tol 0.000e+00   PASS
+
+bit (sparse ternary, AND form) vs fp32 block kernel
+  plan: rows/block=16 blocks=32 smem=3456 B dense_pm1=0
+  max |x_bit - x_block|  (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  max rel energy diff    (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  max |x_bit - x_cpu|               1.610e-07   tol 1.000e-04   PASS
+  energy vs CPU reference           0.000e+00   tol 1.000e-09   PASS
+  second run |x - x_block|          0.000e+00   tol 0.000e+00   PASS
+
+gemm int8 (IMMA) vs fp32 block kernel, sparse ternary
+  max |x_int8 - x_block| (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  max rel energy diff    (expect 0) 0.000e+00   tol 0.000e+00   PASS
+  second run |x - x_block|          0.000e+00   tol 0.000e+00   PASS
+
+csr-row energy check
+  max rel energy diff vs csr-row    0.000e+00   tol 1.000e-06   PASS
+  |E_gpu_best - E_direct|           1.083e-06   tol 1.406e-02   PASS
+
+csr-block energy check
+  max rel energy diff vs csr-row    0.000e+00   tol 1.000e-06   PASS
+  |E_gpu_best - E_direct|           1.083e-06   tol 1.406e-02   PASS
+
+csr-cluster energy check
+  |E_gpu_best - E_direct|           1.083e-06   tol 1.406e-02   PASS
+
+cluster kernel (C=2) vs block kernel
+  max |x_cluster - x_block|         1.431e-06   tol 1.000e-04   PASS
+  max rel energy diff               0.000e+00   tol 1.000e-06   PASS
+
+cluster kernel (C=4) vs block kernel
+  max |x_cluster - x_block|         0.000e+00   tol 1.000e-04   PASS
+  max rel energy diff               0.000e+00   tol 1.000e-06   PASS
+
+ALL CHECKS PASSED

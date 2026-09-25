@@ -1,0 +1,12 @@
+DT=auto -> dt=1.10 for WK2000_1.rud
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu bit reduction=0 in 3.436s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 3.612s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 5.193s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 3.710s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 4.363s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 13.054s (50 rows)
+results: run_K2000_result_v7_B128/K2000_128_800
+summary: run_K2000_result_v7_B128/K2000_128_800/summary.csv
+status:  run_K2000_result_v7_B128/K2000_128_800/run_status.csv

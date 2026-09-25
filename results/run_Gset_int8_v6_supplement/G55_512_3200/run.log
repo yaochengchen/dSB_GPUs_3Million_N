@@ -1,0 +1,8 @@
+DT=auto -> dt=0.93 for G55
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu gemm:int8 reduction=0 in 24.885s (50 rows)
+ok: public-dsb public:fp32:matched reduction=0 in 111.524s (50 rows)
+results: run_Gset_int8_v6_supplement/G55_512_3200
+summary: run_Gset_int8_v6_supplement/G55_512_3200/summary.csv
+status:  run_Gset_int8_v6_supplement/G55_512_3200/run_status.csv

@@ -1,0 +1,23 @@
+DT=auto -> dt=1.10 for WK2000_1.rud
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu auto reduction=0 in 6.052s (50 rows)
+ok: dsb-gpu bit reduction=0 in 5.921s (50 rows)
+ok: dsb-gpu csr-row reduction=0 in 108.060s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 1039.754s (50 rows)
+ok: dsb-gpu csr-cluster reduction=0 in 802.548s (50 rows)
+ok: dsb-gpu block reduction=0 in 65.329s (50 rows)
+ok: dsb-gpu cluster reduction=0 in 173.050s (50 rows)
+ok: dsb-gpu global-sync reduction=0 in 750.403s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 6.214s (50 rows)
+ok: dsb-gpu gemm:fp32:notf32 reduction=0 in 12.884s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 7.239s (50 rows)
+ok: dsb-gpu block:fp16 reduction=0 in 56.512s (50 rows)
+ok: dsb-gpu cluster:fp16 reduction=0 in 278.924s (50 rows)
+ok: dsb-gpu global-sync:fp16 reduction=0 in 780.884s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 5.560s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 4.914s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 20.305s (50 rows)
+results: run_K2000_result_v5/K2000_512_1600
+summary: run_K2000_result_v5/K2000_512_1600/summary.csv
+status:  run_K2000_result_v5/K2000_512_1600/run_status.csv

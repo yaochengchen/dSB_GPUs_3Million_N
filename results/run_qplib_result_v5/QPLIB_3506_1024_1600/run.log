@@ -1,0 +1,18 @@
+reference solution: data/qplib/data/../sol/QPLIB_3506.sol
+target objective: 478.000000000000000
+DT=auto -> dt=1.16 for QPLIB_3506.qplib
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu auto reduction=0 in 3.299s (50 rows)
+warning: dsb-gpu bit reduction=0 -> error after 0.024s (exit 1, 0/50 rows kept): error: unknown variant: bit
+ok: dsb-gpu csr-row reduction=0 in 1.131s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 0.868s (50 rows)
+ok: dsb-gpu block reduction=0 in 12.964s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 2.892s (50 rows)
+warning: dsb-gpu gemm:fp32:notf32 reduction=0 -> error after 0.025s (exit 1, 0/50 rows kept): error: unknown option: --no-tf32
+ok: dsb-gpu gemm:int8 reduction=0 in 2.927s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 3.363s (50 rows)
+ok: public-dsb public:float32:matched reduction=0 in 16.109s (50 rows)
+results: run_qplib_result_v5/QPLIB_3506_1024_1600
+summary: run_qplib_result_v5/QPLIB_3506_1024_1600/summary.csv
+status:  run_qplib_result_v5/QPLIB_3506_1024_1600/run_status.csv

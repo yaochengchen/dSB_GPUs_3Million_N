@@ -1,0 +1,7 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+WK2000_1.rud,16,800,dsb-gpu,bit,bit,fp32,0,ok,0,3.017,50,50,1800,""
+WK2000_1.rud,16,800,dsb-gpu,gemm:fp16,gemm,fp16,0,ok,0,3.292,50,50,1800,""
+WK2000_1.rud,16,800,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,4.978,50,50,1800,""
+WK2000_1.rud,16,800,dsb-gpu,gemm,gemm,fp32,0,ok,0,3.506,50,50,1800,""
+WK2000_1.rud,16,800,public-dsb,public:fp16:matched,public,fp16,0,error,1,4.472,0,50,1800,"ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype."
+WK2000_1.rud,16,800,public-dsb,public:fp32:matched,public,fp32,0,ok,0,12.773,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 1.1; 'pressure_slope': 0.0011377858686995106; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"

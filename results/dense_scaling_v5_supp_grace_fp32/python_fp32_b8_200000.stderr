@@ -1,0 +1,2 @@
+[W924 02:26:57.875752566 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 160000114688 bytes (free: 152424808448, total: 153008209920).
+[W924 02:27:18.059689864 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 160000114688 bytes (free: 152425398272, total: 153008209920).

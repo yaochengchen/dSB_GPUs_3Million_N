@@ -1,0 +1,10 @@
+GPU 0: rows [0,250016)  HBM 250016 rows (15.6 GB)  Grace node 0: 0 rows (0.0 GB, node free 507.2 GB)
+GPU 1: rows [250016,500000)  HBM 249984 rows (15.6 GB)  Grace node 1: 0 rows (0.0 GB, node free 482.7 GB)
+n=500000  matrix 31.3 GB (31.3 HBM + 0.0 Grace), placement hbm, xi=0.000707 dt=1.1
+allocation + generation: 3.2 s
+repeat 1: 0.0035 s/step  8951.6 GB/s  energy -256568570  checksum f96c7d002e89e4c7
+repeat 2: 0.0035 s/step  8955.0 GB/s  energy -256568570  checksum f96c7d002e89e4c7
+repeat 3: 0.0035 s/step  8951.5 GB/s  energy -256568570  checksum f96c7d002e89e4c7
+GPU 0 step 25: HBM rows 3.48 ms (4488 GB/s)  Grace rows 0.00 ms (0 GB/s)  update 0.007 ms  exchange 0.006 ms
+GPU 1 step 25: HBM rows 3.47 ms (4500 GB/s)  Grace rows 0.00 ms (0 GB/s)  update 0.005 ms  exchange 0.014 ms
+median 0.0035 s/step over 3 repeats

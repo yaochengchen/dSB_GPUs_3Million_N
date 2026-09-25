@@ -1,0 +1,8 @@
+DT=auto -> dt=1.16 for G66
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu gemm:int8 reduction=0 in 64.356s (50 rows)
+ok: public-dsb public:fp32:matched reduction=0 in 44.386s (50 rows)
+results: run_Gset_int8_v7/G66_512_400
+summary: run_Gset_int8_v7/G66_512_400/summary.csv
+status:  run_Gset_int8_v7/G66_512_400/run_status.csv

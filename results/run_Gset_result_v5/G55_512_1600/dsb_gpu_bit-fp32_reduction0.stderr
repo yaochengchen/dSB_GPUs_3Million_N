@@ -1,0 +1,1 @@
+error: Solver: bit variant does not fit: N=5000 batch=512 needs 509056 B shared memory per block and 157 co-resident blocks

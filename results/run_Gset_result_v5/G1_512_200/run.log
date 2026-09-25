@@ -1,0 +1,16 @@
+DT=auto -> dt=0.58 for G1
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu auto reduction=0 in 0.941s (50 rows)
+ok: dsb-gpu bit reduction=0 in 0.952s (50 rows)
+ok: dsb-gpu csr-row reduction=0 in 0.587s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 1.214s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 1.203s (50 rows)
+ok: dsb-gpu gemm:fp32:notf32 reduction=0 in 1.358s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 1.234s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 1.342s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 1.860s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 3.856s (50 rows)
+results: run_Gset_result_v5/G1_512_200
+summary: run_Gset_result_v5/G1_512_200/summary.csv
+status:  run_Gset_result_v5/G1_512_200/run_status.csv

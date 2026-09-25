@@ -1,0 +1,10 @@
+DT=auto -> dt=1.10 for WK2000_1.rud
+nvcc -O3 -std=c++17 --use_fast_math --expt-relaxed-constexpr -arch=sm_90 -Iinclude -Ithird_party/fasthare -I/usr/include/eigen3 -I/usr/local/cuda-13.2/include -c src/gemm.cu -o src/gemm.o
+make: Nothing to be done for 'probe'.
+g++ apps/solve_qplib.o src/qplib.o src/kernels.o src/solver.o src/sparse_solver.o src/gemm.o src/dense_capacity.o src/bitfused.o src/sparse.o src/reduction.o third_party/fasthare/fasthare.o third_party/fasthare/graph.o -o solve_qplib -L/usr/local/cuda-13.2/lib64 -lcudart -lcublas
+g++ apps/solve_gset.o src/gset.o src/kernels.o src/solver.o src/sparse_solver.o src/gemm.o src/dense_capacity.o src/bitfused.o src/sparse.o src/reduction.o third_party/fasthare/fasthare.o third_party/fasthare/graph.o -o solve_gset -L/usr/local/cuda-13.2/lib64 -lcudart -lcublas
+g++ apps/dense_scaling.o src/kernels.o src/solver.o src/sparse_solver.o src/gemm.o src/dense_capacity.o src/bitfused.o src/sparse.o src/reduction.o third_party/fasthare/fasthare.o third_party/fasthare/graph.o -o dense_scaling -L/usr/local/cuda-13.2/lib64 -lcudart -lcublas
+g++ apps/selftest.o src/kernels.o src/solver.o src/sparse_solver.o src/gemm.o src/dense_capacity.o src/bitfused.o src/sparse.o src/reduction.o third_party/fasthare/fasthare.o third_party/fasthare/graph.o -o selftest -L/usr/local/cuda-13.2/lib64 -lcudart -lcublas
+g++ apps/bench.o src/kernels.o src/solver.o src/sparse_solver.o src/gemm.o src/dense_capacity.o src/bitfused.o src/sparse.o src/reduction.o third_party/fasthare/fasthare.o third_party/fasthare/graph.o -o bench -L/usr/local/cuda-13.2/lib64 -lcudart -lcublas
+double free or corruption (!prev)
+scripts/run_gh200_gset_comparison.sh: line 138: 733680 Aborted                 (core dumped) ./selftest 512 4 50 > "$OUT_DIR/selftest.txt"

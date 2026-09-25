@@ -1,0 +1,14 @@
+instance	target_cut	batch	steps	status	output_dir
+K2000	33337	512	200	started	run_K2000_result_v5/K2000_512_200
+K2000	33337	512	200	completed	run_K2000_result_v5/K2000_512_200
+K2000	33337	512	400	started	run_K2000_result_v5/K2000_512_400
+K2000	33337	512	400	completed	run_K2000_result_v5/K2000_512_400
+K2000	33337	512	800	started	run_K2000_result_v5/K2000_512_800
+K2000	33337	512	800	completed	run_K2000_result_v5/K2000_512_800
+K2000	33337	512	1600	started	run_K2000_result_v5/K2000_512_1600
+K2000	33337	512	1600	completed	run_K2000_result_v5/K2000_512_1600
+K2000	33337	512	3200	started	run_K2000_result_v5/K2000_512_3200
+K2000	33337	512	3200	failed	run_K2000_result_v5/K2000_512_3200
+K2000	33337	512	3200	started	run_K2000_result_v5/K2000_512_3200
+K2000	33337	512	3200	started	run_K2000_result_v5/K2000_512_3200
+K2000	33337	512	3200	completed	run_K2000_result_v5/K2000_512_3200

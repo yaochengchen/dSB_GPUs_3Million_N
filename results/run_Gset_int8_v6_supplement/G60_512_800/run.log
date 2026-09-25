@@ -1,0 +1,8 @@
+DT=auto -> dt=0.93 for G60
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu gemm:int8 reduction=0 in 36.442s (50 rows)
+ok: public-dsb public:fp32:matched reduction=0 in 48.401s (50 rows)
+results: run_Gset_int8_v6_supplement/G60_512_800
+summary: run_Gset_int8_v6_supplement/G60_512_800/summary.csv
+status:  run_Gset_int8_v6_supplement/G60_512_800/run_status.csv

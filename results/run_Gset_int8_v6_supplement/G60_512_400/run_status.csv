@@ -1,0 +1,3 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+G60,512,400,dsb-gpu,gemm:int8,gemm,int8,0,ok,0,34.558,50,50,1800,""
+G60,512,400,public-dsb,public:fp32:matched,public,fp32,0,ok,0,26.415,50,50,1800,"simulated-bifurcation schedule=matched env={'time_step': 0.93; 'pressure_slope': 0.0026949093163015064; 'heat_coefficient': 0.06; 'init': 'uniform(-0.01;0.01)'}"

@@ -1,0 +1,8 @@
+DT=auto -> dt=1.16 for G12
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu csr-row reduction=0 in 0.644s (50 rows)
+ok: public-dsb public:fp32:library reduction=0 in 9.016s (50 rows)
+results: run_Gset_library_v5_supp/G12_512_800
+summary: run_Gset_library_v5_supp/G12_512_800/summary.csv
+status:  run_Gset_library_v5_supp/G12_512_800/run_status.csv

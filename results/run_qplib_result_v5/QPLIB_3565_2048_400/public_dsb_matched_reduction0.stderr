@@ -1,0 +1,1 @@
+simulated-bifurcation schedule=matched env={'time_step': 1.17, 'pressure_slope': 0.0021421074052653, 'heat_coefficient': 0.06, 'init': 'uniform(-0.01,0.01)'}

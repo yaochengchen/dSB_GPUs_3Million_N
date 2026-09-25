@@ -1,0 +1,5 @@
+DT=auto -> dt=1.10 for WK2000_1.rud
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+double free or corruption (!prev)
+scripts/run_gh200_gset_comparison.sh: line 138: 734592 Aborted                 (core dumped) ./selftest 512 4 50 > "$OUT_DIR/selftest.txt"

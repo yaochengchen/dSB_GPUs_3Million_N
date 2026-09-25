@@ -1,0 +1,10 @@
+reference solution: data/qplib/data/../sol/QPLIB_3693.sol
+target objective: 1154.000000000000000
+DT=auto -> dt=1.15 for QPLIB_3693.qplib
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu csr-block reduction=0 in 0.725s (50 rows)
+ok: public-dsb public:float32:library reduction=0 in 8.890s (50 rows)
+results: run_qplib_library_v5_supp/QPLIB_3693_256_800
+summary: run_qplib_library_v5_supp/QPLIB_3693_256_800/summary.csv
+status:  run_qplib_library_v5_supp/QPLIB_3693_256_800/run_status.csv

@@ -1,0 +1,16 @@
+DT=auto -> dt=1.16 for G66
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu auto reduction=0 in 2.039s (50 rows)
+warning: dsb-gpu bit reduction=0 -> does-not-fit after 0.560s (exit 1, 0/50 rows kept): error: Solver: bit variant does not fit: N=9000 batch=512 needs 785536 B shared memory per block and 282 co-resident blocks
+ok: dsb-gpu csr-row reduction=0 in 2.532s (50 rows)
+ok: dsb-gpu csr-block reduction=0 in 2.024s (50 rows)
+ok: dsb-gpu gemm reduction=0 in 39.054s (50 rows)
+ok: dsb-gpu gemm:fp32:notf32 reduction=0 in 71.518s (50 rows)
+ok: dsb-gpu gemm:int8 reduction=0 in 67.956s (50 rows)
+ok: dsb-gpu gemm:fp16 reduction=0 in 34.251s (50 rows)
+warning: public-dsb public:fp16:matched reduction=0 -> error after 2.757s (exit 1, 0/50 rows kept): ValueError: The Simulated Bifurcation algorithm can only run with a torch.float32 or a torch.float64 dtype.
+ok: public-dsb public:fp32:matched reduction=0 in 42.298s (50 rows)
+results: run_Gset_result_v5_supp/G66_512_400
+summary: run_Gset_result_v5_supp/G66_512_400/summary.csv
+status:  run_Gset_result_v5_supp/G66_512_400/run_status.csv
