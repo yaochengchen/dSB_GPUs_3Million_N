@@ -6,7 +6,7 @@ import re
 import numpy as np
 import pandas as pd
 
-from .load import suite_rank
+from .load import suite_rank, RELAXED_LEVELS
 
 # benchmark family of a suite directory (None = not a main benchmark suite)
 FAMILY_PATTERNS = [("K2000", r"^run_K2000_result"), ("G-set", r"^run_Gset_(result|int8)"), ("QPLIB", r"^run_qplib_result")]
@@ -72,6 +72,7 @@ def summarize(df: pd.DataFrame, by=("family", "instance", "agents", "steps", "la
         q1_obj=("objective", lambda s: s.quantile(0.25)),
         q3_obj=("objective", lambda s: s.quantile(0.75)),
         successes=("success", "sum"),
+        **{f"successes_{t}": (f"success_{t}", "sum") for t in RELAXED_LEVELS},
         median_gap_pct=("gap_pct", "median"),
         best_gap_pct=("gap_pct", "min"),
         gpu_mem_bytes=("gpu_memory_bytes", "median"),
@@ -79,6 +80,29 @@ def summarize(df: pd.DataFrame, by=("family", "instance", "agents", "steps", "la
     out["p_batch"] = out["successes"] / out["runs"]
     out["tts99_solver_s"] = [tts99(s, r, t) for s, r, t in zip(out["successes"], out["runs"], out["solver_s"])]
     out["tts99_wall_s"] = [tts99(s, r, t) for s, r, t in zip(out["successes"], out["runs"], out["wall_s"])]
+    for t in RELAXED_LEVELS:
+        out[f"tts99_{t}_solver_s"] = [tts99(s, r, tm) for s, r, tm in zip(out[f"successes_{t}"], out["runs"], out["solver_s"])]
+    return out
+
+
+def relaxed_targets(fastest: pd.DataFrame, summary: pd.DataFrame, steps: int,
+                    ref_label: str = "public-matched") -> pd.DataFrame:
+    """Per instance: the tightest target level (100 %, then 99.9, 99.5, 99 % of the best-known value) at which BOTH the
+    fastest custom path and the reference reach the target in at least one trial, so that TTS99 is defined for both;
+    99 % if neither level qualifies.  Returns the level and the two success counts and TTS99 values at that level."""
+    levels = [("100", "", 1.0)] + [(t, f"_{t}", th) for t, th in RELAXED_LEVELS.items()]
+    ref = summary[(summary["steps"] == steps) & (summary["label"] == ref_label)].set_index(["family", "instance"])
+    rows = []
+    for _, r in fastest.iterrows():
+        p = ref.loc[(r["family"], r["instance"])]
+        for tag, suf, th in levels:
+            if r[f"successes{suf}"] > 0 and p[f"successes{suf}"] > 0:
+                break
+        rows.append(dict(family=r["family"], instance=r["instance"], level_pct=th * 100,
+                         u_dsb=int(r[f"successes{suf}"]), u_sb=int(p[f"successes{suf}"]),
+                         tts_dsb_s=r[f"tts99{suf}_solver_s"], tts_sb_s=p[f"tts99{suf}_solver_s"]))
+    out = pd.DataFrame(rows)
+    out["tts_ratio"] = out["tts_sb_s"] / out["tts_dsb_s"]
     return out
 
 

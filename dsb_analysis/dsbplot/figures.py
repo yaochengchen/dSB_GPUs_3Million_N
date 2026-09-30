@@ -86,7 +86,9 @@ def fig_k2000_panorama(summ: pd.DataFrame, steps: int = 1600):
 # ---------------------------------------------------------------------------
 # G-set and QPLIB per-instance comparison at fixed steps
 # ---------------------------------------------------------------------------
-def fig_gset_qplib(summ: pd.DataFrame, fastest: pd.DataFrame, steps: int = 3200):
+def fig_gset_qplib(summ: pd.DataFrame, fastest: pd.DataFrame, steps: int = 3200, relaxed: pd.DataFrame | None = None):
+    """Panels C/D: fraction of trials reaching the target; when `relaxed` is given, the target of each instance is
+    its relaxed level (tightest of 100/99.9/99.5/99 % reached by both), annotated where it is below 100 %."""
     fig, axes = plt.subplots(2, 2, figsize=(7.2, 4.6), gridspec_kw=dict(height_ratios=[1.25, 1], width_ratios=[16, 19]), sharex="col")
     for j, fam in enumerate(["G-set", "QPLIB"]):
         f = fastest[fastest["family"] == fam].sort_values("n").reset_index(drop=True)
@@ -102,15 +104,22 @@ def fig_gset_qplib(summ: pd.DataFrame, fastest: pd.DataFrame, steps: int = 3200)
             a.text(xi, sp * 1.12, NAME[lab].split(" (")[0], rotation=90, ha="center", va="bottom", fontsize=5.6)
         a.set_ylim(top=a.get_ylim()[1] * 4)
         b = axes[1, j]
-        if fam == "G-set":
-            b.plot(x, f["median_gap_pct"], "o", color="C3", label="dsb-gpu (fastest path)")
-            b.plot(x, pub["median_gap_pct"].values, "x", color="k", label="SB 2.0.0 (matched)")
-            b.set_ylabel("median gap to best-known (%)")
+        if relaxed is not None:
+            r = relaxed[relaxed["family"] == fam].set_index("instance").loc[f["instance"]]
+            ud, us, lv = r["u_dsb"].values, r["u_sb"].values, r["level_pct"].values
+            ylab = "trials reaching target (%)"
         else:
-            b.plot(x, f["successes"] / f["runs"] * 100, "o", color="C3", label="dsb-gpu (fastest path)")
-            b.plot(x, (pub["successes"] / pub["runs"] * 100).values, "x", color="k", label="SB 2.0.0 (matched)")
-            b.set_ylabel("trials reaching best-known (%)")
-        b.legend(fontsize=6.5, loc="best")
+            ud, us, lv = f["successes"].values, pub["successes"].values, np.full(len(f), 100.0)
+            ylab = "trials reaching best-known (%)"
+        runs = f["runs"].values
+        b.plot(x, ud / runs * 100, "o", color="C3", label="dsb-gpu (fastest path)")
+        b.plot(x, us / runs * 100, "x", color="k", label="SB 2.0.0 (matched)")
+        for xi, l in enumerate(lv):
+            if l < 100:
+                b.text(xi, 105, f"{l:g}%", ha="center", va="bottom", fontsize=4.8, color="0.35", rotation=90)
+        b.set_ylim(-5, 135)
+        b.set_ylabel(ylab)
+        b.legend(fontsize=6.5, loc="center right" if fam == "G-set" else "lower right")
         b.set_xticks(x)
         b.set_xticklabels([f"{i.replace('QPLIB_', '')}\n{int(n)}" for i, n in zip(f["instance"], f["n"])], fontsize=5.0)
         b.set_xlabel("instance / $n$", fontsize=7)
@@ -127,13 +136,14 @@ def fig_library_sweep(lib: pd.DataFrame):
     pub = lib[lib["label"] == "public-library"].set_index("instance").loc[dsb.index]
     n = dsb["n"].values
     fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 2.8))
-    a.scatter(n, pub["solver_s"] / dsb["solver_s"], s=16, color=COLOR["csr-row"])
-    a.set_xscale("log"); a.set_yscale("log"); a.set_xlabel("$n$"); a.set_ylabel("speedup, csr-row vs SB 2.0.0 (library defaults)")
+    a.scatter(n, pub["solver_s"] / dsb["solver_s"], s=18, color=COLOR["csr-row"], alpha=0.75, linewidths=0)
+    a.set_xscale("log"); a.set_yscale("log"); a.set_xlabel("$n$"); a.set_ylabel("integration speedup, csr-row vs SB 2.0.0")
+    a.set_title("SB 2.0.0 with library defaults, $K=800$", fontsize=7.5, loc="left")
     a.axhline(1, color="k", lw=0.7)
     _panel(a, "A")
-    b.scatter(n, dsb["median_gap_pct"], s=16, color=COLOR["csr-row"], label="dsb-gpu csr-row")
-    b.scatter(n, pub["median_gap_pct"], s=16, marker="x", color="k", label="SB 2.0.0 (library defaults)")
-    b.set_xscale("log"); b.set_xlabel("$n$"); b.set_ylabel("median gap to best-known (%), $K=800$")
+    b.scatter(n, dsb["median_gap_pct"], s=18, color=COLOR["csr-row"], alpha=0.75, linewidths=0, label="dsb-gpu csr-row")
+    b.scatter(n, pub["median_gap_pct"], s=18, marker="x", color="k", alpha=0.75, label="SB 2.0.0 (library defaults)")
+    b.set_xscale("log"); b.set_xlabel("$n$"); b.set_ylabel("median gap to best-known (%)")
     b.legend(fontsize=6.5)
     _panel(b, "B")
     fig.tight_layout(w_pad=1.5)
@@ -151,15 +161,13 @@ def fig_sparse_scaling(sp: pd.DataFrame):
     kmax = g["steps"].max()
     for (l, st), d in g.groupby(["label", "steps"]):
         d = d.sort_values("n_original")
-        a.plot(d["n_original"], d["solver"], marker=MARKER[l], color=COLOR[l], ls="-" if st == kmax else ":")
-        if st == kmax:                                   # label each implementation on its line
-            r = d.iloc[len(d) // 2]
-            a.annotate(NAME[l], (r["n_original"], r["solver"]), textcoords="offset points", xytext=(-4, 6),
-                       ha="right", fontsize=6.5, color=COLOR[l])
+        a.plot(d["n_original"], d["solver"], marker=MARKER[l], color=COLOR[l], ls="-" if st == kmax else ":",
+               label=NAME[l] if st == kmax else None)
     a.set_xscale("log"); a.set_yscale("log"); a.set_xlabel("$n$ (degree 100, $B=200$)"); a.set_ylabel("median integration time (s)")
     ks = sorted(g["steps"].unique())
-    a.legend([Line2D([], [], color="grey", ls="-" if k == kmax else ":") for k in ks], [f"$K$={int(k)}" for k in ks],
-             fontsize=6.2, loc="lower right")
+    h1, l1 = a.get_legend_handles_labels()
+    a.legend(h1 + [Line2D([], [], color="grey", ls="-" if k == kmax else ":") for k in ks],
+             l1 + [f"$K$={int(k)}" for k in ks], fontsize=6.2, loc="upper left")
     _panel(a, "A")
     d = g[(g["label"] == "csr-row")].groupby("n_original").agg(mem=("mem", "first"), eups=("eups", "median")).reset_index()
     b.plot(d["n_original"], d["mem"] / 1e9, marker="o", color=COLOR["csr-row"], label="csr-row GPU allocation")
@@ -221,7 +229,7 @@ def fig_sensitivity(agents: pd.DataFrame, k2000: pd.DataFrame, steps_gap: int = 
 def fig_path_selection(summ: pd.DataFrame, fastest: pd.DataFrame, steps: int = 3200):
     fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 3.0))
     s = summ[(summ["steps"] == steps) & (summ["agents"] == 512) & (summ["family"].isin(["G-set", "K2000"]))]
-    dense = ["gemm-fp16", "gemm-int8", "gemm-tf32", "gemm-fp32", "bit", "block", "public-matched"]
+    dense = ["gemm-fp16", "gemm-int8", "gemm-tf32", "gemm-fp32", "bit", "public-matched"]
     for l in dense:
         d = s[s["label"] == l].groupby("n")["us_per_step"].median().reset_index().sort_values("n")
         if d.empty:
@@ -236,15 +244,22 @@ def fig_path_selection(summ: pd.DataFrame, fastest: pd.DataFrame, steps: int = 3
     e = f["edges"].copy()
     e = e.fillna(pd.Series([nnz.get((a, b), np.nan) / 2 for a, b in zip(f["family"], f["instance"])], index=f.index))
     f["deg"] = 2 * e / f["n"]
+    # shaded bands: the measured selection rule in degree
+    for lo, hi, l in [(1.5, 4.5, "csr-block"), (4.5, 8, "csr-row"), (8, 4000, "gemm-fp16")]:
+        b.axhspan(lo, hi, color=COLOR[l], alpha=0.08, lw=0)
+    b.text(640, 2.3, "csr-block", ha="left", va="center", fontsize=6.5, color=COLOR["csr-block"])
+    b.text(640, 6.2, "csr-row", ha="left", va="center", fontsize=6.5, color=COLOR["csr-row"])
+    b.text(640, 250, "tensor-core products\n(FP16 / INT8)", ha="left", va="center", fontsize=6.5, color=COLOR["gemm-fp16"])
     for l in order(f["label"].unique()):
         d = f[f["label"] == l]
-        b.scatter(d["n"], d["deg"], marker=MARKER[l], color=COLOR[l], s=34, label=NAME[l], edgecolors="k", linewidths=0.4)
+        b.scatter(d["n"], d["deg"], marker=MARKER[l], color=COLOR[l], s=34, label=NAME[l], edgecolors="k", linewidths=0.4, zorder=5)
     b.set_xscale("log"); b.set_yscale("log"); b.set_xlabel("$n$"); b.set_ylabel("average degree $2|\\mathcal{E}|/n$")
+    b.set_ylim(1.5, 4000); b.set_xlim(600, 30000)
     b.legend(fontsize=6.2, title="fastest path (integration time)", title_fontsize=6.5, loc="upper right")
     for _, r in f.iterrows():
         if r["family"] == "K2000":
-            b.annotate("K2000", (r["n"], r["deg"]), textcoords="offset points", xytext=(4, -3), fontsize=6)
-    b.text(0.02, 0.03, "G-set and K2000 instances, $B$=512, $K$=3200", transform=b.transAxes, fontsize=6)
+            b.annotate("K2000\n(complete graph)", (r["n"], r["deg"]), textcoords="offset points", xytext=(-7, 0),
+                       ha="right", va="center", fontsize=6)
     _panel(b, "B")
     fig.tight_layout(w_pad=1.5)
     return fig
@@ -287,45 +302,61 @@ def dense_hybrid_model(g: pd.DataFrame) -> pd.DataFrame:
 
 
 def fig_dense_scaling(dense: pd.DataFrame):
-    """Panel A: time per step vs n at B=1; Panel B: matrix bandwidth bn^2/T_step at B=1.
-    Filled markers: matrix in HBM; black-edged: whole matrix in Grace memory; diamonds: hybrid split
-    (HBM filled first, remaining rows in Grace memory).  Grey ticks in B: additive model of the hybrid split."""
+    """Panels A, B: time per step vs n at B=1 for FP32 and FP16 separately (dsb-gpu gemm vs PyTorch);
+    Panel C: matrix bandwidth bn^2/T_step for both.  Filled: HBM; black-edged: whole matrix in Grace memory;
+    open diamonds: hybrid (HBM filled first).  Grey ticks in C: additive model of the hybrid split."""
     g = dense_summary(dense)
     g1 = g[g["batch"] == 1]
-    fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 3.1))
-    for ax, ycol, scale in [(a, "tps", 1e3), (b, "bw_TBps", 1.0)]:
-        for (impl, prec), (col, mk, ls) in DENSE_STYLE.items():
-            x = g1[(g1["impl"] == impl) & (g1["precision"] == prec)]
-            h = x[(x["mode"] == "auto") & (x["tier"] == "hbm")].sort_values("n")
-            r = x[(x["mode"] == "auto") & (x["tier"] == "grace")].sort_values("n")
-            y = x[x["tier"] == "hybrid"].sort_values("n")
-            mfc = col if impl == "dsb-gpu" else "none"
-            ax.plot(h["n"], h[ycol] * scale, color=col, marker=mk, ls=ls, mfc=mfc, label=f"{DENSE_NAME[impl]} {prec.upper()}")
-            for part, lab, m2, ls2, edge in [(r, "Grace only", mk, ":", "k"), (y, "hybrid HBM+Grace", "D", "-.", col)]:
-                if len(part) and len(h):
-                    j = pd.concat([h.tail(1), part])
-                    ax.plot(j["n"], j[ycol] * scale, color=col, ls=ls2, lw=1.0)
-                    ax.plot(part["n"], part[ycol] * scale, color=col, marker=m2, ls="none", mfc=col if edge == "k" else "white",
-                            mec=edge, mew=1.0, ms=4.5, label=f"{DENSE_NAME[impl]} {prec.upper()}, {lab}")
-    a.set_xscale("log"); a.set_yscale("log"); a.set_xlabel("$n$ (dense random $J$)"); a.set_ylabel("time per step (ms), $B=1$")
-    a.legend(fontsize=5.3, loc="upper left")
-    _panel(a, "A")
+    fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.7), gridspec_kw=dict(width_ratios=[1, 1, 1.05]))
+
+    def series(ax, impl, prec, ycol, scale, with_labels):
+        col, mk, ls = DENSE_STYLE[(impl, prec)]
+        x = g1[(g1["impl"] == impl) & (g1["precision"] == prec)]
+        h = x[(x["mode"] == "auto") & (x["tier"] == "hbm")].sort_values("n")
+        r = x[(x["mode"] == "auto") & (x["tier"] == "grace")].sort_values("n")
+        y = x[x["tier"] == "hybrid"].sort_values("n")
+        if impl == "torch":
+            ax.plot(h["n"], h[ycol] * scale, color="0.45", marker=mk, ls="--", mfc="white", mec="0.45", ms=4.5, lw=1.0,
+                    alpha=0.9, label=f"PyTorch dense {prec.upper()}" if with_labels else None)
+            return
+        ax.plot(h["n"], h[ycol] * scale, color=col, marker=mk, ls="-", ms=4.5, lw=1.2,
+                label=f"gemm {prec.upper()}, HBM" if with_labels else None)
+        for part, lab, m2, ls2, mfc, mec in [(r, "whole matrix in Grace memory", mk, ":", col, "k"),
+                                             (y, "hybrid HBM + Grace", "D", "-.", "white", col)]:
+            if len(part) and len(h):
+                j = pd.concat([h.tail(1), part])
+                ax.plot(j["n"], j[ycol] * scale, color=col, ls=ls2, lw=1.0, alpha=0.8)
+                ax.plot(part["n"], part[ycol] * scale, color=col, marker=m2, ls="none", mfc=mfc, mec=mec, mew=1.0, ms=5,
+                        label=f"gemm {prec.upper()}, {lab}" if with_labels else None)
+
+    for ax, prec, letter in [(axes[0], "fp32", "A"), (axes[1], "fp16", "B")]:
+        series(ax, "torch", prec, "tps", 1e3, True)
+        series(ax, "dsb-gpu", prec, "tps", 1e3, True)
+        ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlabel("$n$ (dense random $J$)")
+        ax.set_ylabel("time per step (ms), $B=1$")
+        ax.set_title(prec.upper() + (" (TF32 product for gemm)" if prec == "fp32" else ""), fontsize=7.5, loc="left")
+        ax.set_ylim(top=ax.get_ylim()[1] * 30)
+        ax.legend(fontsize=5.4, loc="upper left")
+        _panel(ax, letter)
+    c = axes[2]
+    for prec in ("fp32", "fp16"):
+        series(c, "torch", prec, "bw_TBps", 1.0, False)
+        series(c, "dsb-gpu", prec, "bw_TBps", 1.0, False)
     m = dense_hybrid_model(g1)
-    b.plot(m["n"], m["mb"] / m["tps_model"] / 1e12, ls="none", marker="_", ms=9, mew=1.2, color="0.45",
-           label="additive model $M_H/BW_H+M_G/BW_G$")
+    c.plot(m["n"], m["mb"] / m["tps_model"] / 1e12, ls="none", marker="_", ms=9, mew=1.2, color="0.3",
+           label="model $M_H/BW_H+M_G/BW_G$", zorder=6)
     bh, bg = dense_link_bandwidths(g1)
-    b.axhline(4.9, color="k", ls=":", lw=0.8); b.text(g1["n"].min(), 5.4, "HBM3e peak ≈ 4.9 TB/s", fontsize=6.2, va="bottom")
-    b.axhline(0.45, color="k", ls=":", lw=0.8)
-    b.text(g1["n"].min(), 0.47, "NVLink-C2C 450 GB/s per direction", fontsize=6.2, va="bottom")
+    c.axhline(4.9, color="k", ls=":", lw=0.8); c.text(g1["n"].min(), 5.6, "HBM3e peak 4.9 TB/s", fontsize=6.0, va="bottom")
+    c.axhline(0.45, color="k", ls=":", lw=0.8)
+    c.text(g1["n"].min(), 0.48, "NVLink-C2C 450 GB/s", fontsize=6.0, va="bottom")
     if not np.isnan(bg):
-        b.text(g1["n"].max(), bg / 1e12 * 0.82, f"Grace only ≈ {bg/1e9:.0f} GB/s", fontsize=6.2, ha="right", va="top")
-    b.set_xscale("log"); b.set_yscale("log"); b.set_ylim(0.15, 12)
-    b.set_xlabel("$n$"); b.set_ylabel("matrix bandwidth $bn^2/T_{\\mathrm{step}}$, $B=1$ (TB/s)")
-    h1, l1 = b.get_legend_handles_labels()
-    keep = [i for i, l in enumerate(l1) if "model" in l]           # series legend is in panel A
-    b.legend([h1[i] for i in keep], [l1[i] for i in keep], fontsize=6.0, loc="lower left")
-    _panel(b, "B")
-    fig.tight_layout(w_pad=1.5)
+        c.text(g1["n"].min(), bg / 1e12 * 0.85, f"Grace only: {bg/1e9:.0f} GB/s", fontsize=6.0, ha="left", va="top")
+    c.set_xscale("log"); c.set_yscale("log"); c.set_ylim(0.1, 12)
+    c.set_xlabel("$n$"); c.set_ylabel("matrix bandwidth $bn^2/T_{\\mathrm{step}}$ (TB/s)")
+    c.set_title("FP32 (blue) and FP16 (red)", fontsize=7.5, loc="left")
+    c.legend(fontsize=5.6, loc="upper right")
+    _panel(c, "C")
+    fig.tight_layout(w_pad=1.2)
     return fig
 
 
@@ -430,10 +461,12 @@ def fig_bit_multi(bit: pd.DataFrame):
     b.plot(nn, mb / tmodel / 1e12, ls=":", color="0.4", lw=1.0)
     for _, row in r[r["placement"] == "hybrid"].iterrows():
         a.annotate(f"{row['grace_b']/1e9:.0f} GB in Grace", (row["n"], row["tps"]), textcoords="offset points",
-                   xytext=(6, -9), fontsize=5.8, color="0.3")
+                   xytext=(9, -4), fontsize=5.8, color="0.3", ha="left", va="center")
+    a.set_xlim(right=r["n"].max() * 2.2)
     a.set_xscale("log"); a.set_yscale("log"); a.set_xlabel("$n$ (dense $\\pm1$ $J$, one bit per coupling)")
     a.set_ylabel(f"time per step (s), $B=1$, {gpus} GH200")
-    a.legend(fontsize=5.6, loc="upper left")
+    a.legend(fontsize=5.6, loc="lower right")
+    a.set_ylim(a.get_ylim()[0] * 0.6, a.get_ylim()[1] * 1.5)
     _panel(a, "A")
     b.axhline(gpus * 4.9, color="k", ls=":", lw=0.8)
     b.text(r["n"].min(), gpus * 4.9 * 1.12, f"{gpus}$\\times$ HBM3e peak", fontsize=6.2, va="bottom")
@@ -443,6 +476,10 @@ def fig_bit_multi(bit: pd.DataFrame):
            fontsize=6.0, ha="right", va="top")
     b.set_xscale("log"); b.set_yscale("log"); b.set_ylim(0.3, 20)
     b.set_xlabel("$n$"); b.set_ylabel("matrix bandwidth $n^2/8\\,/\\,T_{\\mathrm{step}}$ (TB/s)")
+    for ax in (a, b):
+        ax.set_xlim(4e5, 5e6)
+        ax.set_xticks([5e5, 1e6, 2e6, 3e6]); ax.set_xticklabels(["0.5M", "1M", "2M", "3M"])
+        ax.xaxis.set_minor_formatter(plt.NullFormatter())
     _panel(b, "B")
     fig.tight_layout(w_pad=1.5)
     return fig

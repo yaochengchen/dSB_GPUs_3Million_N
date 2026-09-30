@@ -1,0 +1,7 @@
+DT=auto -> dt=1.10 for WK2000_1.rud
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu csr-block reduction=0 in 1042.362s (50 rows)
+results: results/run_K2000_result_v8_csrblock/K2000_512_1600
+summary: results/run_K2000_result_v8_csrblock/K2000_512_1600/summary.csv
+status:  results/run_K2000_result_v8_csrblock/K2000_512_1600/run_status.csv

@@ -1,0 +1,2 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+G64,512,3200,dsb-gpu,block,block,fp32,0,ok,0,1196.056,50,50,7200,""

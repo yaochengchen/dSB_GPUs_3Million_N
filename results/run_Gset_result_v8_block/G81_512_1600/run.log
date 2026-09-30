@@ -1,0 +1,7 @@
+DT=auto -> dt=1.15 for G81
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+warning: dsb-gpu block reduction=0 -> timeout after 7200.107s (exit 124, 39/50 rows kept): 
+results: results/run_Gset_result_v8_block/G81_512_1600
+summary: results/run_Gset_result_v8_block/G81_512_1600/summary.csv
+status:  results/run_Gset_result_v8_block/G81_512_1600/run_status.csv

@@ -23,6 +23,25 @@ Fraction of seeds bitwise-identical to gemm TF32 at K=3200: auto=1.00, bit=1.00,
 - wall speedup: min 3.8, median 22.2, max 115.2
 - median gap: dsb better on 10, worse on 1, tie on 5 instances
 - instances where dsb reaches best-known in >=1 trial: 5; SB: 5
+- relaxed target (tightest of 100/99.9/99.5/99 % reached by both): levels {100.0: 5, 99.5: 4, 99.0: 7}; dsb reaches it more often on 6, less often on 1, equally on 9; TTS99 ratio SB/dsb where both resolved: min 5.1, median 26.4, max 224.0
+| family   | instance   |   level_pct |   u_dsb |   u_sb |   tts_dsb_s |   tts_sb_s |   tts_ratio |
+|:---------|:-----------|------------:|--------:|-------:|------------:|-----------:|------------:|
+| G-set    | G1         |       100   |      50 |     50 |      0.0205 |     0.5598 |     27.3173 |
+| G-set    | G11        |       100   |      50 |     38 |      0.0099 |     2.2214 |    223.971  |
+| G-set    | G22        |       100   |      13 |      5 |      0.6318 |    23.3934 |     37.0282 |
+| G-set    | G32        |        99   |      50 |     44 |      0.0222 |     1.5966 |     71.9906 |
+| G-set    | G43        |       100   |      50 |     50 |      0.0233 |     0.6139 |     26.2977 |
+| G-set    | G48        |       100   |      50 |     50 |      0.0308 |     0.9281 |     30.0956 |
+| G-set    | G55        |        99.5 |      50 |     50 |      0.0932 |     2.1192 |     22.7465 |
+| G-set    | G58        |        99.5 |      50 |     50 |      0.1363 |     2.1212 |     15.5618 |
+| G-set    | G60        |        99.5 |      50 |     50 |      0.1303 |     3.4445 |     26.4446 |
+| G-set    | G63        |        99.5 |      50 |     50 |      0.2247 |     3.4541 |     15.3723 |
+| G-set    | G64        |        99   |      42 |     50 |      0.6774 |     3.4503 |      5.0932 |
+| G-set    | G66        |        99   |       8 |      0 |      2.3741 |   inf      |    inf      |
+| G-set    | G70        |        99   |       0 |      0 |    inf      |   inf      |    nan      |
+| G-set    | G72        |        99   |      10 |      0 |      2.0922 |   inf      |    inf      |
+| G-set    | G77        |        99   |      20 |      0 |      1.4777 |   inf      |    inf      |
+| G-set    | G81        |        99   |       0 |      0 |    inf      |   inf      |    nan      |
 
 ## QPLIB (K=3200): fastest path per instance vs matched SB 2.0.0
 
@@ -31,6 +50,28 @@ Fraction of seeds bitwise-identical to gemm TF32 at K=3200: auto=1.00, bit=1.00,
 - wall speedup: min 9.1, median 41.7, max 59.3
 - median gap: dsb better on 4, worse on 2, tie on 13 instances
 - instances where dsb reaches best-known in >=1 trial: 18; SB: 15
+- relaxed target (tightest of 100/99.9/99.5/99 % reached by both): levels {100.0: 15, 99.9: 1, 99.5: 3}; dsb reaches it more often on 6, less often on 1, equally on 12; TTS99 ratio SB/dsb where both resolved: min 17.6, median 60.1, max 626.1
+| family   | instance   |   level_pct |   u_dsb |   u_sb |   tts_dsb_s |   tts_sb_s |   tts_ratio |
+|:---------|:-----------|------------:|--------:|-------:|------------:|-----------:|------------:|
+| QPLIB    | QPLIB_3506 |       100   |      50 |     50 |      0.0129 |     0.5813 |     44.9403 |
+| QPLIB    | QPLIB_3565 |       100   |      50 |     50 |      0.0139 |     0.5487 |     39.6001 |
+| QPLIB    | QPLIB_3642 |       100   |      50 |     40 |      0.0075 |     1.5743 |    209.396  |
+| QPLIB    | QPLIB_3650 |       100   |      25 |     26 |      0.0456 |     3.9041 |     85.5613 |
+| QPLIB    | QPLIB_3693 |        99.5 |      50 |     50 |      0.0081 |     0.5259 |     64.5684 |
+| QPLIB    | QPLIB_3705 |       100   |      50 |     50 |      0.0092 |     0.5533 |     60.1134 |
+| QPLIB    | QPLIB_3706 |       100   |      50 |     50 |      0.0095 |     0.5528 |     58.4196 |
+| QPLIB    | QPLIB_3738 |       100   |      50 |     50 |      0.0108 |     0.5575 |     51.6398 |
+| QPLIB    | QPLIB_3745 |       100   |      50 |     50 |      0.0162 |     0.5235 |     32.3199 |
+| QPLIB    | QPLIB_3822 |       100   |      50 |     50 |      0.0117 |     0.5187 |     44.266  |
+| QPLIB    | QPLIB_3832 |       100   |      50 |     48 |      0.0076 |     1.1062 |    145.987  |
+| QPLIB    | QPLIB_3838 |       100   |      48 |     17 |      0.0208 |     6.5983 |    317.692  |
+| QPLIB    | QPLIB_3850 |       100   |      43 |     22 |      0.0257 |     4.3057 |    167.695  |
+| QPLIB    | QPLIB_3852 |       100   |      50 |     50 |      0.012  |     0.5546 |     46.3846 |
+| QPLIB    | QPLIB_3877 |       100   |      50 |     50 |      0.0085 |     0.5628 |     66.5706 |
+| QPLIB    | QPLIB_5721 |        99.5 |       1 |      1 |      7.27   |   127.635  |     17.5565 |
+| QPLIB    | QPLIB_5725 |        99.9 |      50 |     49 |      0.0074 |     1.1133 |    149.442  |
+| QPLIB    | QPLIB_5755 |        99.5 |      43 |      7 |      0.0277 |    17.3562 |    626.137  |
+| QPLIB    | QPLIB_5875 |       100   |      50 |     50 |      0.028  |     0.5682 |     20.3251 |
 
 ## G-set large instances, agents sweep (auto path, K=3200): median gap % by B
 

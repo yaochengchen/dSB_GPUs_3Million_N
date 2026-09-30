@@ -241,3 +241,22 @@ cd manuscript && pdflatex main.tex && pdflatex main.tex
 - 双卡 bit：`raw.csv`、`environment.txt`、各 `n*.log`。
 
 最省事的做法是整个 `results/` 目录打包。
+
+
+cd ~/software/dsb-gpu_v5
+nvidia-smi -i 1 --query-compute-apps=pid --format=csv   # 只应有表头，确认 GPU1 空闲
+
+STEPS_ALL="200 400 800 1600 3200"
+
+# 1) block on the 16 G-set instances (GPU1)
+GPU_ID=1 DT=auto RESULT_ROOT=results/run_Gset_result_v8_block \
+STEPS_LIST="$STEPS_ALL" CUSTOM_VARIANTS="block" SB_SCHEDULES=" " \
+VARIANT_TIMEOUT_S=7200 \
+./run_Gset.sh 1 11 22 32 43 48 55 60 63 70 72 81 58 64 66 77 \
+  2>&1 | tee results/run_Gset_result_v8_block.log
+
+# 2) csr-block on K2000 (GPU1)
+GPU_ID=1 DT=auto RESULT_ROOT=results/run_K2000_result_v8_csrblock \
+STEPS_LIST="$STEPS_ALL" CUSTOM_VARIANTS="csr-block" SB_SCHEDULES=" " \
+VARIANT_TIMEOUT_S=3600 \
+./run_K2000.sh 2>&1 | tee results/run_K2000_result_v8_csrblock.log

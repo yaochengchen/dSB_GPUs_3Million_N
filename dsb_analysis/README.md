@@ -16,6 +16,7 @@ python run_all.py --root ../dsb-gpu_v5 --out out
 | `out/figures/*.pdf` `*.png` | 全部图（PDF 进论文，PNG 看） |
 | `out/tables/benchmark_summary.csv` | 每个 (家族, 实例, B, K, 路径) 一行：中位 µs/step、solver/wall 时间、best/median 目标值、成功数、gap、TTS99、对 SB 的加速比 |
 | `out/tables/fastest_path_K3200.csv` | 每个实例 K=3200 时最快的 dsb 路径及其加速比 |
+| `out/tables/relaxed_target_K3200.csv` | 放宽目标比较：对每个实例取 100 / 99.9 / 99.5 / 99 % 最优值中最严格、且 dsb 最快路径和 SB 都至少命中一次的档位，给出该档位下两者的命中数和 TTS99（都没命中则记 99 %，TTS 为 inf） |
 | `out/tables/trajectory_identity.csv` | 各路径与 gemm-TF32 逐 seed 结果相同的比例（命题"三元耦合下精确"的实证） |
 | `out/tables/gset_agents_sweep.csv` | 六个大 G-set 实例 B=512…8192 的扫描 |
 | `out/tables/gset_library_sweep.csv` | 66 个 G-set 实例，csr-row vs SB 2.0.0 库默认参数 |

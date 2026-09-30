@@ -1,0 +1,7 @@
+DT=auto -> dt=1.16 for G72
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu block reduction=0 in 1226.168s (50 rows)
+results: results/run_Gset_result_v8_block/G72_512_1600
+summary: results/run_Gset_result_v8_block/G72_512_1600/summary.csv
+status:  results/run_Gset_result_v8_block/G72_512_1600/run_status.csv

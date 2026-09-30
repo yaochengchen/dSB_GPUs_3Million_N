@@ -63,24 +63,34 @@ def steps_table(summ: pd.DataFrame, labels) -> str:
     return "% auto-generated: K2000 step-budget sweep, B=512, 50 trials per cell\n" + "\n".join(out) + "\n"
 
 
-def instance_table(fastest: pd.DataFrame, summ: pd.DataFrame, family: str, steps: int) -> str:
+def _lvl(x):
+    return f"{x:g}"
+
+
+def instance_table(fastest: pd.DataFrame, summ: pd.DataFrame, family: str, steps: int, relaxed: pd.DataFrame) -> str:
     f = fastest[fastest["family"] == family].sort_values("n")
     pub = summ[(summ["family"] == family) & (summ["steps"] == steps) & (summ["label"] == "public-matched")].set_index("instance")
+    rel = relaxed[relaxed["family"] == family].set_index("instance")
     nnz = summ[summ["family"] == family].groupby("instance")["nnz"].max()
     has_deg = f["edges"].notna().any() or nnz.notna().any()
+    one_b = f["agents"].nunique() == 1          # constant B (G-set): stated in the caption, not a column
     rows = []
     for _, r in f.iterrows():
         p = pub.loc[r["instance"]]
+        x = rel.loc[r["instance"]]
         e = r["edges"] if not np.isnan(r["edges"]) else nnz.get(r["instance"], np.nan) / 2
         deg = 2 * e / r["n"]
         inst = r['instance'].replace('_', '\\_')
         degcol = f"{_f(deg)} & " if has_deg else ""
-        rows.append(f"{inst} & {int(r['n'])} & {degcol}{int(r['agents'])} & {_f(r['dt'],2)} & {TEX_NAME[r['label']]} & "
+        bcol = "" if one_b else f"{int(r['agents'])} & "
+        rows.append(f"{inst} & {int(r['n'])} & {degcol}{bcol}{_f(r['dt'],2)} & {TEX_NAME[r['label']]} & "
                     f"{_f(r['us_per_step'])} & {_f(p['us_per_step'])} & {_f(r['speedup_solver'])} & "
-                    f"{_f(r['median_gap_pct'],3)} & {_f(p['median_gap_pct'],3)} & {int(r['successes'])}/{int(p['successes'])} \\\\")
-    return (f"% auto-generated: {family}, K={steps}, fastest dsb-gpu path (integration time) vs matched SB 2.0.0\n"
-            + ("\\begin{tabular}{lrrrrlrrrrrr}\\toprule\n" if has_deg else "\\begin{tabular}{lrrrlrrrrrr}\\toprule\n")
-            + "Instance & $n$ & " + ("deg & " if has_deg else "") + "$B$ & $\\Delta t$ & Fastest path & \\textmu s/step & SB \\textmu s/step & Speedup & Gap (\\%) & SB gap (\\%) & $u$ dsb/SB\\\\\\midrule\n"
+                    f"{_f(r['median_gap_pct'],3)} & {_f(p['median_gap_pct'],3)} & {int(r['successes'])}/{int(p['successes'])} & "
+                    f"{_lvl(x['level_pct'])} & {x['u_dsb']}/{x['u_sb']} & {_tts(x['tts_dsb_s'])} & {_tts(x['tts_sb_s'])} \\\\")
+    return (f"% auto-generated: {family}, K={steps}, fastest dsb-gpu path (integration time) vs matched SB 2.0.0; "
+            "level = tightest of 100/99.9/99.5/99 % of the best-known value reached by both in >= 1 trial\n"
+            + "\\begin{tabular}{lr" + ("r" if has_deg else "") + ("" if one_b else "r") + "rlrrrrrrrrrr}\\toprule\n"
+            + "Instance & $n$ & " + ("deg & " if has_deg else "") + ("" if one_b else "$B$ & ") + "$\\Delta t$ & Fastest path & \\textmu s/step & SB \\textmu s/step & Speedup & Gap (\\%) & SB gap (\\%) & $u$ dsb/SB & Level (\\%) & $u_\\theta$ dsb/SB & TTS$_{99}$ dsb (s) & TTS$_{99}$ SB (s)\\\\\\midrule\n"
             + "\n".join(rows) + "\n\\bottomrule\\end{tabular}\n")
 
 

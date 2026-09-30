@@ -1,0 +1,7 @@
+DT=auto -> dt=1.17 for G32
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu block reduction=0 in 9.534s (50 rows)
+results: results/run_Gset_result_v8_block/G32_512_200
+summary: results/run_Gset_result_v8_block/G32_512_200/summary.csv
+status:  results/run_Gset_result_v8_block/G32_512_200/run_status.csv

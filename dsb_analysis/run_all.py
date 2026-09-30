@@ -68,6 +68,8 @@ def main():
     prov.to_csv(os.path.join(args.out, "tables", "provenance.csv"), index=False)
     fastest = S.fastest_per_instance(summ, STEPS_MAIN)
     fastest.to_csv(os.path.join(args.out, "tables", f"fastest_path_K{STEPS_MAIN}.csv"), index=False)
+    relaxed = S.relaxed_targets(fastest, summ, STEPS_MAIN)
+    relaxed.to_csv(os.path.join(args.out, "tables", f"relaxed_target_K{STEPS_MAIN}.csv"), index=False)
     ident = S.bitwise_identity(fam)
     ident.to_csv(os.path.join(args.out, "tables", "trajectory_identity.csv"), index=False)
 
@@ -95,7 +97,7 @@ def main():
     print("figures ...")
     save(F.fig_k2000_dense(summ, fam), args.out, "fig1_k2000_dense")
     save(F.fig_k2000_panorama(summ, steps=1600), args.out, "figS_k2000_all_paths")
-    save(F.fig_gset_qplib(summ, fastest, STEPS_MAIN), args.out, "fig6_gset_qplib")
+    save(F.fig_gset_qplib(summ, fastest, STEPS_MAIN, relaxed), args.out, "fig6_gset_qplib")
     save(F.fig_library_sweep(lib), args.out, "fig7_gset66_library_baseline")
     if len(sparse):
         save(F.fig_sparse_scaling(sparse), args.out, "fig3_sparse_scaling")
@@ -117,8 +119,8 @@ def main():
         "tab_k2000_K3200.tex": T.k2000_table(summ, 3200, main_paths),
         "tab_k2000_K1600.tex": T.k2000_table(summ, 1600, main_paths),
         "tab_k2000_steps.tex": T.steps_table(summ, main_paths),
-        "tab_gset_instances.tex": T.instance_table(fastest, summ, "G-set", STEPS_MAIN),
-        "tab_qplib_instances.tex": T.instance_table(fastest, summ, "QPLIB", STEPS_MAIN),
+        "tab_gset_instances.tex": T.instance_table(fastest, summ, "G-set", STEPS_MAIN, relaxed),
+        "tab_qplib_instances.tex": T.instance_table(fastest, summ, "QPLIB", STEPS_MAIN, relaxed),
         "tab_arith_ratio.tex": T.arith_table(summ, ident, STEPS_MAIN),
     }
     if len(dense):
@@ -130,11 +132,11 @@ def main():
         open(os.path.join(args.out, "tables", name), "w").write(txt)
         print("  wrote", name)
 
-    write_summary(args.out, summ, fastest, ident, agents, lib, qlib, dense, dsum, sparse, prov, k2000_all, bit, bsum)
+    write_summary(args.out, summ, fastest, ident, agents, lib, qlib, dense, dsum, sparse, prov, k2000_all, bit, bsum, relaxed)
     print("done ->", args.out)
 
 
-def write_summary(out, summ, fastest, ident, agents, lib, qlib, dense, dsum, sparse, prov, k2000_all, bit, bsum):
+def write_summary(out, summ, fastest, ident, agents, lib, qlib, dense, dsum, sparse, prov, k2000_all, bit, bsum, relaxed):
     L = []
     k = summ[(summ["family"] == "K2000") & (summ["steps"] == 3200)].set_index("label")
     L.append("# Key numbers (auto-generated)\n")
@@ -156,6 +158,11 @@ def write_summary(out, summ, fastest, ident, agents, lib, qlib, dense, dsum, spa
         worse = (f["median_gap_pct"].values > pub["median_gap_pct"].values + 1e-9).sum()
         L.append(f"- median gap: dsb better on {better}, worse on {worse}, tie on {len(f)-better-worse} instances")
         L.append(f"- instances where dsb reaches best-known in >=1 trial: {(f.successes>0).sum()}; SB: {(pub.successes>0).sum()}")
+        x = relaxed[relaxed["family"] == fam]
+        L.append(f"- relaxed target (tightest of 100/99.9/99.5/99 % reached by both): levels {x.level_pct.value_counts().sort_index(ascending=False).to_dict()}; "
+                 f"dsb reaches it more often on {(x.u_dsb > x.u_sb).sum()}, less often on {(x.u_dsb < x.u_sb).sum()}, equally on {(x.u_dsb == x.u_sb).sum()}; "
+                 f"TTS99 ratio SB/dsb where both resolved: min {x.tts_ratio[np.isfinite(x.tts_ratio)].min():.1f}, median {x.tts_ratio[np.isfinite(x.tts_ratio)].median():.1f}, max {x.tts_ratio[np.isfinite(x.tts_ratio)].max():.1f}")
+        L.append(x.round(4).to_markdown(index=False))
     a = agents[(agents["steps"] == 3200) & (agents["label"] == "auto")]
     L.append("\n## G-set large instances, agents sweep (auto path, K=3200): median gap % by B\n")
     L.append(a.pivot_table(index="instance", columns="agents", values="median_gap_pct").round(3).to_markdown())

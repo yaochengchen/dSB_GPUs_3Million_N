@@ -1,0 +1,7 @@
+DT=auto -> dt=0.93 for G60
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu block reduction=0 in 1195.583s (50 rows)
+results: results/run_Gset_result_v8_block/G60_512_3200
+summary: results/run_Gset_result_v8_block/G60_512_3200/summary.csv
+status:  results/run_Gset_result_v8_block/G60_512_3200/run_status.csv

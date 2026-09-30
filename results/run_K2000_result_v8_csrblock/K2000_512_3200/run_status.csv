@@ -1,0 +1,2 @@
+instance,batch,steps,implementation,entry,variant,precision,reduction,status,exit_code,elapsed_s,rows_written,repeats_requested,timeout_s,detail
+WK2000_1.rud,512,3200,dsb-gpu,csr-block,csr-block,fp32,0,ok,0,2082.772,50,50,3600,""

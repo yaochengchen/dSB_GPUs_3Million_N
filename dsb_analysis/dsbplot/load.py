@@ -25,6 +25,10 @@ import numpy as np
 import pandas as pd
 
 
+# relaxed success levels used when the best-known value is not reached: tag -> fraction of the target
+RELAXED_LEVELS = {"999": 0.999, "995": 0.995, "990": 0.990}
+
+
 def suite_rank(suite: str) -> tuple:
     m = re.search(r"_v(\d+)", suite)
     return (int(m.group(1)) if m else 0, int("supp" in suite), suite)
@@ -139,6 +143,8 @@ def _normalise(df: pd.DataFrame) -> pd.DataFrame:
     tgt = df.dropna(subset=["target"]).groupby("instance")["target"].first()   # agents sweep left target blank
     df["target"] = df["target"].fillna(df["instance"].map(tgt))
     df["success"] = (df["objective"] >= df["target"]).astype(float)           # every suite is a maximisation
+    for tag, th in RELAXED_LEVELS.items():                                    # relaxed targets: within 0.1/0.5/1 % of the best-known value
+        df[f"success_{tag}"] = (df["objective"] >= df["target"] - (1 - th) * df["target"].abs()).astype(float)
     df["us_per_step"] = df["solver_s"] / df["steps"] * 1e6
     df["gap_pct"] = (df["target"] - df["objective"]) / df["target"].abs().clip(lower=1) * 100
     return df

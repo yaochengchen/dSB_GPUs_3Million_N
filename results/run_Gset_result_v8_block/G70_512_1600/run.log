@@ -1,0 +1,7 @@
+DT=auto -> dt=0.98 for G70
+make: Nothing to be done for 'all'.
+make: Nothing to be done for 'probe'.
+ok: dsb-gpu block reduction=0 in 1224.770s (50 rows)
+results: results/run_Gset_result_v8_block/G70_512_1600
+summary: results/run_Gset_result_v8_block/G70_512_1600/summary.csv
+status:  results/run_Gset_result_v8_block/G70_512_1600/run_status.csv
